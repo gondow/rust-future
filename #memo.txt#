@@ -1,0 +1,24 @@
+https://qiita.com/Leapcell/items/8a4b3f72afc1e6fbd42e
+
+https://docs.rs/genawaiter/latest/genawaiter/
+https://async-book-ja.netlify.app/02_execution/02_future.html
+https://blog.tiqwab.com/2022/03/26/rust-future.html
+https://scrapbox.io/nwtgck/Rust%E3%81%AEasync%2F.await%E3%81%AE%E8%84%B1%E7%B3%96%E3%82%92%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%81%99%E3%82%8B%E3%81%9F%E3%82%81%E3%81%AE%E5%AE%8C%E5%85%A8%E3%81%AB%E5%8B%95%E3%81%8F%E3%82%B3%E3%83%BC%E3%83%89
+https://zenn.dev/skanehira/articles/2024-08-12-go-rust-pros-cons
+https://zenn.dev/belle/scraps/13b4311ca4145e
+https://users.rust-lang.org/t/about-desugar-of-expr-await/94844
+
+match ::std::future::IntoFuture::into_future(<expr>) {
+    mut __awaitee => loop {
+        match unsafe { ::std::future::Future::poll(
+            <::std::pin::Pin>::new_unchecked(&mut __awaitee),
+            ::std::future::get_context(task_context),
+        ) } {
+            ::std::task::Poll::Ready(result) => break result,
+            ::std::task::Poll::Pending => {}
+        }
+        task_context = yield ();    // A
+    }
+}
+
+Future は poll という名前のジェネレータを内部に持っている．
