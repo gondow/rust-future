@@ -1,4 +1,4 @@
-# rust-future （執筆中）
+# rust-future 
 
 Rust の Future や async/await のメモ．
 Jupyter Notebookとして書いたので，Google Colab上で実行できます．
